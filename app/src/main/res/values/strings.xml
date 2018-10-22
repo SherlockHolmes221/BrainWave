@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">BrainWave</string>
+    <string name="age">请输入您的年龄</string>
+    <string name="height">请输入您的身高</string>
+    <string name="weight">请输入您的体重</string>
+
+
+    <string name="ble_not_supported">不支持蓝牙</string>
+    <string name="unknown_device">未知设备</string>
+
+    <string name="not_connected">未连接</string>
+    <string name="connected">已连接</string>
+    <string name="connecting">正在连接</string>
+</resources>

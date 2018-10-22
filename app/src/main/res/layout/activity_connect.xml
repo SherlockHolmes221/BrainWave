@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#191934">
+
+    <ListView
+        android:id="@+id/con_act_show_list"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"/>
+
+
+    <ImageView
+        android:id="@+id/con_act_refresh_iv"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/reload"
+        android:background="@drawable/circle"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="刷新蓝牙连接"
+        android:textColor="#ffffff"/>
+
+</LinearLayout>
