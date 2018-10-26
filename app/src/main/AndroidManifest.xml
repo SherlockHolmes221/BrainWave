@@ -17,14 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:screenOrientation="portrait">
-        <activity android:name=".SignInActivity">
+        <activity android:name=".activity.MusicActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConnectActivity"/>
+        <activity android:name=".activity.ConnectActivity"/>
+
+        <service android:name=".service.BluetoothLeService"/>
+        <service android:name=".service.MusicService"/>
     </application>
 
 </manifest>
