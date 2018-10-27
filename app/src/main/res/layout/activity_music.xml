@@ -6,7 +6,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_blackground"
+    android:background="@drawable/song_bg"
     android:fitsSystemWindows="true">
 
     <!--<android.support.v7.widget.Toolbar-->
@@ -55,8 +55,7 @@
             android:layout_toEndOf="@id/tvCurrentTime"
             android:layout_toStartOf="@+id/tvTotalTime"
             android:paddingEnd="15dp"
-            android:paddingStart="15dp"
-            />
+            android:paddingStart="15dp" />
 
         <TextView
             android:id="@+id/tvTotalTime"
@@ -74,29 +73,42 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingBottom="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="10dp">
+
+        <!--<ImageView-->
+            <!--android:id="@+id/act_music_voice_btn"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:src="@drawable/voice"/>-->
 
         <ImageView
             android:id="@+id/ivLast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/ic_last"/>
 
         <ImageView
+            android:layout_gravity="center"
             android:id="@+id/ivPlayOrPause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/ic_play"/>
 
         <ImageView
             android:id="@+id/ivNext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/ic_next"/>
+
+        <ImageView
+            android:id="@+id/act_music_more_btn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/play_icn_src"/>
     </LinearLayout>
 
 </com.example.quxian.brainwave.widgt.BackgourndAnimationRelativeLayout>

@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.adapter.LeDeviceListAdapter;
 import com.example.quxian.brainwave.base.BaseActivity;
+import com.example.quxian.brainwave.base.WeakHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,11 +122,7 @@ public class ConnectActivity extends BaseActivity {
                    final BluetoothDevice device = mLeDeviceListAdapter.getDevice(i);
                    String uuid = device.getAddress();
                    Log.e(TAG, uuid);
-
                    //进行连接
-
-
-
                }
            }
        });
@@ -169,7 +166,7 @@ public class ConnectActivity extends BaseActivity {
     private void scanLeDevice(final boolean enable) {
         if (enable) {
             // Stops scanning after a pre-defined scan period.
-            mHandler.postDelayed(new Runnable() {
+            weakHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if(mScanning) {
@@ -184,7 +181,7 @@ public class ConnectActivity extends BaseActivity {
             mScanning = true;
             //F000E0FF-0451-4000-B000-000000000000
             mLeDeviceListAdapter.clear();
-            mHandler.sendEmptyMessage(1);
+            weakHandler.sendEmptyMessage(1);
             mBluetoothAdapter.startLeScan(mLeScanCallback);
         } else {
             mScanning = false;
@@ -203,23 +200,37 @@ public class ConnectActivity extends BaseActivity {
                         @Override
                         public void run() {
                             mLeDeviceListAdapter.addDevice(device);
-                            mHandler.sendEmptyMessage(1);
+                            weakHandler.sendEmptyMessage(1);
                         }
                     });
                 }
             };
 
-    public final Handler mHandler = new Handler() {
+
+//    public final Handler mHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case 1: // Notify change
+//                    mLeDeviceListAdapter.notifyDataSetChanged();
+//                    break;
+//            }
+//        }
+//    };
+
+
+    WeakHandler weakHandler = new WeakHandler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
+        public boolean handleMessage(Message msg) {
+
             switch (msg.what) {
                 case 1: // Notify change
                     mLeDeviceListAdapter.notifyDataSetChanged();
                     break;
             }
+            return false;
         }
-    };
-
+    });
 
     //检查蓝牙权限
     private void checkPermissions() {

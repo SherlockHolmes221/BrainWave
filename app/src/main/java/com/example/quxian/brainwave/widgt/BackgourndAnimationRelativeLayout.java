@@ -44,9 +44,9 @@ public class BackgourndAnimationRelativeLayout extends RelativeLayout {
     private void initLayerDrawable() {
         Drawable backgroundDrawable = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            backgroundDrawable = getContext().getDrawable(R.drawable.ic_blackground);
+            backgroundDrawable = getContext().getDrawable(R.drawable.song_bg);
         }else
-            backgroundDrawable = ContextCompat.getDrawable(getContext(),R.drawable.ic_blackground);
+            backgroundDrawable = ContextCompat.getDrawable(getContext(),R.drawable.song_bg);
         Drawable[] drawables = new Drawable[2];
 
         /*初始化时先将前景与背景颜色设为一致*/

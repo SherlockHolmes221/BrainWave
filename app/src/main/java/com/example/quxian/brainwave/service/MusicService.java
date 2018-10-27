@@ -2,10 +2,13 @@ package com.example.quxian.brainwave.service;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.media.MediaPlayer;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
@@ -43,7 +46,8 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return new MyBinder() ;
+
     }
 
     @Override
@@ -136,6 +140,10 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         }
     }
 
+    private boolean isPlaying(){
+        return  mMediaPlayer.isPlaying();
+    }
+
     @Override
     public void onCompletion(MediaPlayer mp) {
         sendMusicCompleteBroadCast();
@@ -179,4 +187,42 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         }
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+    public class MyBinder extends Binder {
+
+        //获取歌曲长度
+        public int getMusicDuration() {
+            int duration = 0;
+            if (mMediaPlayer != null) {
+                duration = mMediaPlayer.getDuration();
+                // Log.e("TAG", String.valueOf(duration));
+            }
+            return duration;
+        }
+
+        //获取当前播放进度
+        public int getMusicCurrentPosition() {
+            int position = 0;
+            if (mMediaPlayer != null) {
+                position = mMediaPlayer.getCurrentPosition();
+                // Log.e("TAG", "getMusicCurrentPosition:"+String.valueOf(position));
+            }
+            return position;
+        }
+
+        public void play(int position){
+            MusicService.this.play(position);
+        }
+
+        public void pause(){
+            MusicService.this.pause();
+        }
+
+        public boolean isPlaying(){
+            return MusicService.this.isPlaying();
+        }
+
+    }
+
+
 }
