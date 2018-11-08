@@ -58,7 +58,7 @@ public class ConnectActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setBaseTitle("连接蓝牙");
@@ -123,6 +123,8 @@ public class ConnectActivity extends BaseActivity {
                    String uuid = device.getAddress();
                    Log.e(TAG, uuid);
                    //进行连接
+
+                   //跳转逻辑
                }
            }
        });
@@ -132,8 +134,11 @@ public class ConnectActivity extends BaseActivity {
         refreshIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mLeDeviceListAdapter.clear();
-                scanLeDevice(true);
+//                mLeDeviceListAdapter.clear();
+//                scanLeDevice(true);
+
+                //假装跳转
+                startActivity(MainActivity.class);
             }
         });
     }
@@ -205,19 +210,6 @@ public class ConnectActivity extends BaseActivity {
                     });
                 }
             };
-
-
-//    public final Handler mHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case 1: // Notify change
-//                    mLeDeviceListAdapter.notifyDataSetChanged();
-//                    break;
-//            }
-//        }
-//    };
-
 
     WeakHandler weakHandler = new WeakHandler(new Handler.Callback() {
         @Override

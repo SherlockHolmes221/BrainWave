@@ -118,9 +118,9 @@ public class MusicListActivity extends BaseActivity{
     }
 
     private void initMusicDatas() {
-        MusicData musicData1 = new MusicData(R.raw.music4, R.raw.ic_music1, "コネクト", "ClariS");
-        MusicData musicData2 = new MusicData(R.raw.music6, R.raw.ic_music2, "朋友关系", "龚子婕JessieG");
-        MusicData musicData3 = new MusicData(R.raw.music5, R.raw.ic_music3, "如何", "张韶涵");
+        MusicData musicData1 = new MusicData(R.raw.music1, R.raw.ic_music1, "コネクト", "ClariS");
+        MusicData musicData2 = new MusicData(R.raw.music2, R.raw.ic_music2, "朋友关系", "龚子婕JessieG");
+        MusicData musicData3 = new MusicData(R.raw.music3, R.raw.ic_music3, "烟熏妆", "邓紫棋");
 
         mMusicDatas.add(musicData1);
         mMusicDatas.add(musicData2);

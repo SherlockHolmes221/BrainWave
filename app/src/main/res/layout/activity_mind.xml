@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#191934"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <rorbin.q.radarview.RadarView
+            android:layout_margin="10dp"
+            android:id="@+id/mind_act_radar_view"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            app:rotation_enable="false"
+            app:radar_layer="1"
+            app:web_mode="polygon"
+            app:vertex_line_color="#99FFFFFF"
+            app:layer_line_color="#99FFFFFF"
+            app:vertex_text_color="#FFFFFF"
+            app:vertex_text_offset="30dp"
+            app:vertex_icon_margin="4dp"
+            app:vertex_icon_position="top"
+            app:vertex_icon_size="2dp"/>
+
+        <LinearLayout
+            android:padding="8dp"
+            android:background="@drawable/boarder"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/holo_red_dark"
+                    android:layout_width="30dp"
+                    android:layout_height="3dp" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:paddingLeft="5dp"
+                    android:textColor="#ffffff"
+                    android:text="自评得分"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/white"
+                    android:layout_width="30dp"
+                    android:layout_height="3dp" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:paddingLeft="5dp"
+                    android:textColor="#ffffff"
+                    android:text="他评平均分"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/holo_blue_light"
+                    android:layout_width="30dp"
+                    android:layout_height="3dp" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:paddingLeft="5dp"
+                    android:textColor="#ffffff"
+                    android:text="人平均分"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:text="评估结果"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

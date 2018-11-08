@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/head"
+        app:civ_border_color="@color/bgColor"
+        app:civ_border_width="2dp"
+        app:civ_fill_color="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/signin_act_height_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:minHeight="50dp"
@@ -86,41 +98,40 @@
     </LinearLayout>
 
     <LinearLayout
-        android:minHeight="50dp"
         android:id="@+id/signin_act_age_layout"
-        android:background="@drawable/bg_layout"
-        android:orientation="horizontal"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="50dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/bg_layout"
+        android:minHeight="50dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/signin_act_sign_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            app:met_baseColor="#C0C0C0"
-            app:met_primaryColor="#ffffff"
-            app:met_errorColor="#FF0000"
-            app:met_textColorHint="#C0C0C0"
             android:id="@+id/signin_act_age_ed"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:hint="@string/age"
             android:inputType="number"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            app:met_baseColor="#C0C0C0"
+            app:met_errorColor="#FF0000"
+            app:met_primaryColor="#ffffff"
+            app:met_textColorHint="#C0C0C0" />
+
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textSize="20sp"
             android:text="岁"
             android:textColor="#ffffff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="20sp" />
     </LinearLayout>
 
 
@@ -128,10 +139,8 @@
         android:id="@+id/signin_act_sign_btn"
         android:layout_width="320dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="80dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/flat_button"
         android:gravity="center"
