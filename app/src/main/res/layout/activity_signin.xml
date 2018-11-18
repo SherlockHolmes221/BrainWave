@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg"
+    android:background="@color/bgColor"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/head"
-        app:civ_border_color="@color/bgColor"
-        app:civ_border_width="2dp"
-        app:civ_fill_color="#ffffff"
+        android:src="@drawable/icon"
         app:layout_constraintBottom_toTopOf="@+id/signin_act_height_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

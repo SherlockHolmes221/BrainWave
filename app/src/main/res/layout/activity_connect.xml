@@ -6,31 +6,57 @@
     android:orientation="vertical"
     android:background="#191934">
 
-    <ListView
-        android:id="@+id/con_act_show_list"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="center_horizontal"
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="0.8"
         android:layout_width="match_parent"
-        android:layout_height="350dp"/>
+        android:layout_height="0dp">
+        <ImageView
+            android:id="@+id/con_act_icon_iv"
+            android:src="@drawable/icon"
+            android:layout_gravity="center"
+            android:layout_width="120dp"
+            android:layout_height="120dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="top"
+        android:orientation="vertical"
+        android:layout_weight="1.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <ListView
+            android:id="@+id/con_act_show_list"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="top"
+        android:orientation="vertical"
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <ImageView
+            android:id="@+id/con_act_refresh_iv"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/reload"
+            android:background="@drawable/circle"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刷新蓝牙连接"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/con_act_refresh_iv"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/reload"
-        android:background="@drawable/circle"
-        android:layout_width="60dp"
-        android:layout_height="60dp"/>
-
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="刷新蓝牙连接"
-        android:textColor="#ffffff"/>
 
 </LinearLayout>

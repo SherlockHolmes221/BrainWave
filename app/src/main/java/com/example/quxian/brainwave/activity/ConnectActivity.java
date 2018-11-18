@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectActivity extends BaseActivity {
+    private ImageView iconIv;
     private ImageView refreshIv;
     private ListView listView;
     private boolean mScanning;
@@ -96,6 +97,10 @@ public class ConnectActivity extends BaseActivity {
         mBluetoothAdapter.enable();
 
         mLeDeviceListAdapter = new LeDeviceListAdapter(this);
+
+        iconIv = findById(R.id.con_act_icon_iv);
+        //加载圆形图片
+        loadCirclePic(this,R.drawable.icon,iconIv);
 
         listView = findById(R.id.con_act_show_list);
         listView.setAdapter(mLeDeviceListAdapter);

@@ -6,7 +6,9 @@ import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -24,7 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private static final String TAG = "MainActivity";
 
@@ -59,7 +61,7 @@ public class MainActivity extends BaseActivity {
 
         initView();
 
-        connect();
+        //connect();
     }
 
     private void checkBLE() {
@@ -82,7 +84,11 @@ public class MainActivity extends BaseActivity {
 
 
     private void initView() {
-        
+        findById(R.id.main_act_song_cv).setOnClickListener(this);
+        findById(R.id.main_act_brain_cv).setOnClickListener(this);
+        findById(R.id.main_act_mind_cv).setOnClickListener(this);
+        findById(R.id.main_act_weight_cv).setOnClickListener(this);
+
     }
 
     private void connect() {
@@ -373,5 +379,25 @@ public class MainActivity extends BaseActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.main_act_brain_cv:
+                startActivity(BrainActivity.class);
+                break;
+            case R.id.main_act_weight_cv:
+                startActivity(WeightActivity.class);
+                break;
+            case R.id.main_act_mind_cv:
+                startActivity(MindDataActivity.class);
+                break;
+            case R.id.main_act_song_cv:
+                startActivity(MusicListActivity.class);
+                break;
+
+        }
+
     }
 }
