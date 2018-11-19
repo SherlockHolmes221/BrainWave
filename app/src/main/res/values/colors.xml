@@ -13,5 +13,6 @@
     <color name="red_dark">#fa267b</color>
     <color name="red">#fce4ec</color>
     <color name="red_light">#fff0f5</color>
+    <color name="text_color">#786d99</color>
 
 </resources>

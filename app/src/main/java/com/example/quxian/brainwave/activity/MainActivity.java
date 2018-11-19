@@ -49,13 +49,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public int bindLayout() {
-        return R.layout.activity_main;
+        return R.layout.activity_main_new;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
+        //setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
 
         nskAlgoSdk = new NskAlgoSdk();//集成
 
@@ -89,7 +89,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         findById(R.id.main_act_song_cv).setOnClickListener(this);
         findById(R.id.main_act_brain_cv).setOnClickListener(this);
         findById(R.id.main_act_mind_cv).setOnClickListener(this);
-        findById(R.id.main_act_weight_cv).setOnClickListener(this);
 
     }
 
@@ -388,9 +387,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         switch (view.getId()){
             case R.id.main_act_brain_cv:
                 startActivity(BrainActivity.class);
-                break;
-            case R.id.main_act_weight_cv:
-                startActivity(WeightActivity.class);
                 break;
             case R.id.main_act_mind_cv:
                 startActivity(MindDataActivity.class);
