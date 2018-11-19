@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.base.BaseActivity;
+import com.example.quxian.brainwave.model.UserBean;
+import com.example.quxian.brainwave.utils.SaveAccountUtil;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class NewSignInActivity extends BaseActivity{
@@ -18,8 +20,6 @@ public class NewSignInActivity extends BaseActivity{
     private Button signBtn;
     private TextView registerTv;
     private TextView forgetTv;
-
-    private boolean isCorrect = true;
 
     @Override
     public int bindLayout() {
@@ -58,10 +58,16 @@ public class NewSignInActivity extends BaseActivity{
                 String account = accountEd.getText().toString();
                 String password = passwordEd.getText().toString();
                 //检查账号密码是否正确
-                if(isCorrect){
-                    startActivity(ConnectActivity.class);
+                if(account.equals("")){
+                    showToast("请填写账户");
+                }else if(password.equals("")){
+                    showToast("请填写密码");
                 }else {
-                    showToast("账号密码不正确");
+                    UserBean userBean = new UserBean();
+                    userBean.setAccount(account);
+                    userBean.setPassword(password);
+                    SaveAccountUtil.setUserBean(userBean);
+                    startActivity(ConnectActivity.class);
                 }
             }
         });
@@ -79,7 +85,5 @@ public class NewSignInActivity extends BaseActivity{
                 showToast("暂未推出");
             }
         });
-
-
     }
 }

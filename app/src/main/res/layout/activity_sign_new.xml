@@ -85,6 +85,7 @@
                 android:layout_height="wrap_content" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                android:hint="请输入密码"
                 android:id="@+id/sign_act_password_ed"
                 android:layout_gravity="bottom"
                 android:layout_marginLeft="10dp"
@@ -93,7 +94,7 @@
                 app:met_primaryColor="#ffffff"
                 app:met_errorColor="#FF0000"
                 app:met_textColorHint="#C0C0C0"
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textSize="15sp" />
@@ -110,8 +111,8 @@
         android:layout_height="0dp">
 
         <LinearLayout
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button

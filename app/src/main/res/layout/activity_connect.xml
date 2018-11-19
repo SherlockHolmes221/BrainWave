@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#191934">
+    android:background="@color/bgColor">
 
     <LinearLayout
         android:gravity="center"
@@ -26,6 +26,14 @@
         android:layout_weight="1.5"
         android:layout_width="match_parent"
         android:layout_height="0dp">
+        <TextView
+            android:background="#2f3048"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:text="可用蓝牙设备"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <ListView
             android:id="@+id/con_act_show_list"
             android:layout_marginLeft="15dp"
@@ -36,7 +44,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:gravity="top"
+        android:gravity="center"
         android:orientation="vertical"
         android:layout_weight="0.5"
         android:layout_width="match_parent"
@@ -46,8 +54,8 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/reload"
             android:background="@drawable/circle"
-            android:layout_width="60dp"
-            android:layout_height="60dp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
         <TextView
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"

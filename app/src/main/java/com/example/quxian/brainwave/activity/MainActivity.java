@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.base.BaseActivity;
+import com.example.quxian.brainwave.utils.SaveAccountUtil;
 import com.neurosky.AlgoSdk.NskAlgoDataType;
 import com.neurosky.AlgoSdk.NskAlgoSdk;
 import com.neurosky.connection.ConnectionStates;
@@ -54,6 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
 
         nskAlgoSdk = new NskAlgoSdk();//集成
 

@@ -31,6 +31,7 @@
         <activity android:name=".activity.ConnectActivity"/>
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.BrainActivity"/>
+        <activity android:name=".activity.TestActivity"/>
 
 
         <service android:name=".service.BluetoothLeService"/>

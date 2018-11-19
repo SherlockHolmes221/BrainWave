@@ -32,6 +32,7 @@ import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.adapter.LeDeviceListAdapter;
 import com.example.quxian.brainwave.base.BaseActivity;
 import com.example.quxian.brainwave.base.WeakHandler;
+import com.example.quxian.brainwave.utils.SaveAccountUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class ConnectActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setBaseTitle("连接蓝牙");
+        setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -113,24 +114,26 @@ public class ConnectActivity extends BaseActivity {
                //connecting
                Log.e(TAG, "OnItemClickListener");
 
-               TextView textView = view.findViewById(R.id.item_connect_state);
-               String s = textView.getText().toString();
-               if(s.equals(getResources().getString(R.string.connected))){//已经连接
-                   showToast("蓝牙已经连接");
-               }else if(s.equals(getResources().getString(R.string.connecting))){//正在连接
-//                   showToast("正在连接蓝牙");
-               }else {//未连接
-                   textView.setText(getResources().getString(R.string.connecting));
-//                   showToast("正在连接蓝牙");
+               startActivity(MainActivity.class);
 
-                   //获取uuid
-                   final BluetoothDevice device = mLeDeviceListAdapter.getDevice(i);
-                   String uuid = device.getAddress();
-                   Log.e(TAG, uuid);
-                   //进行连接
-
-                   //跳转逻辑
-               }
+//               TextView textView = view.findViewById(R.id.item_connect_state);
+//               String s = textView.getText().toString();
+//               if(s.equals(getResources().getString(R.string.connected))){//已经连接
+//                   showToast("蓝牙已经连接");
+//               }else if(s.equals(getResources().getString(R.string.connecting))){//正在连接
+////                   showToast("正在连接蓝牙");
+//               }else {//未连接
+//                   textView.setText(getResources().getString(R.string.connecting));
+////                   showToast("正在连接蓝牙");
+//
+//                   //获取uuid
+//                   final BluetoothDevice device = mLeDeviceListAdapter.getDevice(i);
+//                   String uuid = device.getAddress();
+//                   Log.e(TAG, uuid);
+//                   //进行连接
+//
+//                   //跳转逻辑
+//               }
            }
        });
 
@@ -139,11 +142,11 @@ public class ConnectActivity extends BaseActivity {
         refreshIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                mLeDeviceListAdapter.clear();
-//                scanLeDevice(true);
+                mLeDeviceListAdapter.clear();
+                scanLeDevice(true);
 
                 //假装跳转
-                startActivity(MainActivity.class);
+                //startActivity(MainActivity.class);
             }
         });
     }

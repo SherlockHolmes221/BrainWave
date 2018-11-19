@@ -151,10 +151,19 @@
                 app:met_primaryColor="#ffffff"
                 app:met_errorColor="#FF0000"
                 app:met_textColorHint="#C0C0C0"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:textSize="15sp" />
+
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="15sp"
+                android:text="cm"
+                android:textColor="#ffffff"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -187,10 +196,18 @@
                 app:met_primaryColor="#ffffff"
                 app:met_errorColor="#FF0000"
                 app:met_textColorHint="#C0C0C0"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:textSize="15sp" />
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="15sp"
+                android:text="岁"
+                android:textColor="#ffffff"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -223,10 +240,18 @@
                 app:met_primaryColor="#ffffff"
                 app:met_errorColor="#FF0000"
                 app:met_textColorHint="#C0C0C0"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:textSize="15sp" />
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:textSize="15sp"
+                android:text="kg"
+                android:textColor="#ffffff"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         </LinearLayout>
