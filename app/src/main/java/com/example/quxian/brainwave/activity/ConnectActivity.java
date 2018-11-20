@@ -21,6 +21,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -287,4 +289,19 @@ public class ConnectActivity extends BaseActivity {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_quit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_quit:
+                showToast("退出");
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

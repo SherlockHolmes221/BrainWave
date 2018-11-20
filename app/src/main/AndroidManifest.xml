@@ -29,9 +29,9 @@
         <activity android:name=".activity.MindDataActivity"/>
         <activity android:name=".activity.MusicListActivity"/>
         <activity android:name=".activity.ConnectActivity"/>
-        <activity android:name=".activity.NewSignInActivity"/>
+        <activity android:name=".activity.SignInActivity"/>
         <activity android:name=".activity.BrainActivity"/>
-        <activity android:name=".activity.TestActivity"/>
+        <activity android:name=".activity.FAQActivity"/>
 
 
         <service android:name=".service.BluetoothLeService"/>

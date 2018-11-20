@@ -40,7 +40,7 @@ public class ChartView extends View {
     //x轴各个坐标点水平间距
     private int interval = dpToPx(50);
     //背景颜色
-    private int bgcolor = 0xffffffff;
+    private int bgcolor = 0xff524b97;
     //是否在ACTION_UP时，根据速度进行自滑动，没有要求，建议关闭，过于占用GPU
     private boolean isScroll = false;
     //绘制XY轴坐标对应的画笔

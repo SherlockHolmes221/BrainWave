@@ -8,16 +8,17 @@ import android.view.MenuItem;
 import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.base.BaseActivity;
 
-public class BrainActivity extends BaseActivity{
+public class FAQActivity extends BaseActivity{
     @Override
     public int bindLayout() {
-        return R.layout.activity_brain;
+        return R.layout.activity_faq;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
     }
 
     @Override
@@ -28,7 +29,6 @@ public class BrainActivity extends BaseActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.item_user:
                 showToast("user");

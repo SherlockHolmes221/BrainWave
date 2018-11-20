@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/bgColor"
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:textColor="#ffffff"
+        android:layout_marginTop="30dp"
+        android:text="连接设备/使用指导："
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textColor="#ffffff"
+        android:layout_marginTop="80dp"
+        android:text="脑电波知识普及："
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:maxLines="1"
+        android:layout_marginLeft="10dp"
+        android:textColor="#ffffff"
+        android:layout_marginTop="12dp"
+        android:text="α波：学习与思考的最佳状态（范围：8-13Hz）"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:maxLines="1"
+        android:layout_marginLeft="10dp"
+        android:textColor="#ffffff"
+        android:layout_marginTop="5dp"
+        android:text="β波：紧张压力和疲劳状态（范围：大于14Hz）"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:maxLines="1"
+        android:layout_marginLeft="10dp"
+        android:textColor="#ffffff"
+        android:layout_marginTop="5dp"
+        android:text="θ波：深度放松无压力的状态"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:maxLines="1"
+        android:layout_marginLeft="10dp"
+        android:textColor="#ffffff"
+        android:layout_marginTop="5dp"
+        android:text="δ波：深度睡眠状态"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -3,6 +3,8 @@ package com.example.quxian.brainwave.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.base.BaseActivity;
@@ -76,5 +78,21 @@ public class MindDataActivity extends BaseActivity{
     private float dp2px(float dpValue) {
         final float scale = getResources().getDisplayMetrics().density;
         return dpValue * scale + 0.5f;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_user:
+                showToast("user");
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
