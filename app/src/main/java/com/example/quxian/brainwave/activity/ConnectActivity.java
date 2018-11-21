@@ -299,7 +299,7 @@ public class ConnectActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_quit:
-                showToast("退出");
+                //showToast("退出");
                 break;
         }
         return super.onOptionsItemSelected(item);

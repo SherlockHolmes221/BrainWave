@@ -6,12 +6,10 @@ import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.quxian.brainwave.R;
@@ -57,13 +55,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public int bindLayout() {
-        return R.layout.activity_main_new;
+        return R.layout.activity_main;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
+        setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
 
         nskAlgoSdk = new NskAlgoSdk();//集成
 

@@ -34,7 +34,7 @@ public class TestActivity extends BaseActivity{
 
     @Override
     public int bindLayout() {
-        return R.layout.activity_weight;
+        return R.layout.activity_brain;
     }
 
     @Override

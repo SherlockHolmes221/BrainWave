@@ -90,7 +90,7 @@ public class MindDataActivity extends BaseActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_user:
-                showToast("user");
+                //showToast("user");
                 break;
         }
         return super.onOptionsItemSelected(item);

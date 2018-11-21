@@ -29,6 +29,7 @@
             app:vertex_icon_size="2dp"/>
 
         <LinearLayout
+            android:gravity="center"
             android:padding="8dp"
             android:background="@drawable/boarder"
             android:layout_gravity="center"
@@ -44,11 +45,11 @@
                 <TextView
                     android:layout_gravity="center_vertical"
                     android:background="@android:color/holo_red_dark"
-                    android:layout_width="30dp"
+                    android:layout_width="20dp"
                     android:layout_height="3dp" />
 
                 <TextView
-                    android:textSize="15sp"
+                    android:textSize="10sp"
                     android:paddingLeft="5dp"
                     android:textColor="#ffffff"
                     android:text="自评得分"
@@ -65,11 +66,11 @@
                 <TextView
                     android:layout_gravity="center_vertical"
                     android:background="@android:color/white"
-                    android:layout_width="30dp"
+                    android:layout_width="20dp"
                     android:layout_height="3dp" />
 
                 <TextView
-                    android:textSize="15sp"
+                    android:textSize="10sp"
                     android:paddingLeft="5dp"
                     android:textColor="#ffffff"
                     android:text="他评平均分"
@@ -86,11 +87,11 @@
                 <TextView
                     android:layout_gravity="center_vertical"
                     android:background="@android:color/holo_blue_light"
-                    android:layout_width="30dp"
+                    android:layout_width="20dp"
                     android:layout_height="3dp" />
 
                 <TextView
-                    android:textSize="15sp"
+                    android:textSize="10sp"
                     android:paddingLeft="5dp"
                     android:textColor="#ffffff"
                     android:text="人平均分"

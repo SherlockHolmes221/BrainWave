@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.base.BaseActivity;
+import com.example.quxian.brainwave.utils.SaveAccountUtil;
 
 public class FAQActivity extends BaseActivity{
     @Override
@@ -18,7 +19,7 @@ public class FAQActivity extends BaseActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
+        setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
     }
 
     @Override
@@ -31,7 +32,7 @@ public class FAQActivity extends BaseActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_user:
-                showToast("user");
+                //showToast("user");
                 break;
         }
         return super.onOptionsItemSelected(item);
