@@ -34,13 +34,13 @@ public class DashboardView extends View {
     private int mRadius; // 画布边缘半径（去除padding后的半径）
     private int mStartAngle = 150; // 起始角度
     private int mSweepAngle = 240; // 绘制角度
-    private int mMin = 350; // 最小值
-    private int mMax = 950; // 最大值
+    private int mMin = 0; // 最小值
+    private int mMax = 100; // 最大值
     private int mSection = 10; // 值域（mMax-mMin）等分份数
     private int mPortion = 3; // 一个mSection等分份数
-    private String mHeaderText = "BETA"; // 表头
-    private int mCreditValue = 650; // 信用分
-    private int mSolidCreditValue = mCreditValue; // 信用分(设定后不变)
+//    private String mHeaderText = "BETA"; // 表头
+    private int mValue = 75; // 信用分
+    private int mSolidCreditValue = mValue; // 信用分(设定后不变)
     private int mSparkleWidth; // 亮点宽度
     private int mProgressWidth; // 进度圆弧宽度
     private float mLength1; // 刻度顶部相对边缘的长度
@@ -55,13 +55,10 @@ public class DashboardView extends View {
     private RectF mRectFTextArc;
     private Path mPath;
     private Rect mRectText;
-    private String[] mTexts;
+    //private String[] mTexts;
     private int mBackgroundColor;
     private int[] mBgColors;
-    /**
-     * 由于真实的芝麻信用界面信用值不是线性排布，所以播放动画时若以信用值为参考，则会出现忽慢忽快
-     * 的情况（开始以为是卡顿）。因此，先计算出最终到达角度，以扫过的角度为线性参考，动画就流畅了
-     */
+
     private boolean isAnimFinish = true;
     private float mAngleWhenAnim;
 
@@ -94,12 +91,12 @@ public class DashboardView extends View {
         mPath = new Path();
         mRectText = new Rect();
 
-        mTexts = new String[]{"350", "较差", "550", "中等", "600", "良好", "650", "优秀", "700", "极好", "950"};
-        mBgColors = new int[]{ContextCompat.getColor(getContext(), R.color.color_red),
-                ContextCompat.getColor(getContext(), R.color.color_orange),
-                ContextCompat.getColor(getContext(), R.color.color_yellow),
-                ContextCompat.getColor(getContext(), R.color.color_green),
-                ContextCompat.getColor(getContext(), R.color.color_blue)};
+       // mTexts = new String[]{"10", "较差", "550", "中等", "600", "良好", "650", "优秀", "700", "极好", "950"};
+        mBgColors = new int[]{ContextCompat.getColor(getContext(), R.color.bgColor),
+                ContextCompat.getColor(getContext(), R.color.bgColor),
+                ContextCompat.getColor(getContext(), R.color.bgColor),
+                ContextCompat.getColor(getContext(), R.color.bgColor),
+                ContextCompat.getColor(getContext(), R.color.bgColor)};
         mBackgroundColor = mBgColors[0];
     }
 
@@ -156,6 +153,7 @@ public class DashboardView extends View {
          * 画进度圆弧背景
          */
         mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setColor(getResources().getColor(R.color.color_red));
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(mProgressWidth);
         mPaint.setAlpha(80);
@@ -168,13 +166,13 @@ public class DashboardView extends View {
              */
             mPaint.setShader(generateSweepGradient());
             canvas.drawArc(mRectFProgressArc, mStartAngle + 1,
-                    calculateRelativeAngleWithValue(mCreditValue) - 2, false, mPaint);
+                    calculateRelativeAngleWithValue(mValue) - 2, false, mPaint);
             /**
              * 画信用值指示亮点
              */
             float[] point = getCoordinatePoint(
                     mRadius - mSparkleWidth / 2f,
-                    mStartAngle + calculateRelativeAngleWithValue(mCreditValue)
+                    mStartAngle + calculateRelativeAngleWithValue(mValue)
             );
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setShader(generateRadialGradient(point[0], point[1]));
@@ -203,7 +201,7 @@ public class DashboardView extends View {
          */
         mPaint.setShader(null);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(getResources().getColor(R.color.color_purple));
         mPaint.setAlpha(80);
         mPaint.setStrokeCap(Paint.Cap.SQUARE);
         mPaint.setStrokeWidth(mCalibrationWidth);
@@ -270,50 +268,53 @@ public class DashboardView extends View {
         mPaint.setTextAlign(Paint.Align.LEFT);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAlpha(160);
-        for (int i = 0; i < mTexts.length; i++) {
-            mPaint.getTextBounds(mTexts[i], 0, mTexts[i].length(), mRectText);
-            // 粗略把文字的宽度视为圆心角2*θ对应的弧长，利用弧长公式得到θ，下面用于修正角度
-            float θ = (float) (180 * mRectText.width() / 2 /
-                    (Math.PI * (mRadius - mLength2 - mRectText.height())));
-
-            mPath.reset();
-            mPath.addArc(
-                    mRectFTextArc,
-                    mStartAngle + i * (mSweepAngle / mSection) - θ, // 正起始角度减去θ使文字居中对准长刻度
-                    mSweepAngle
-            );
-            canvas.drawTextOnPath(mTexts[i], mPath, 0, 0, mPaint);
-        }
+//        for (int i = 0; i < mTexts.length; i++) {
+//            mPaint.getTextBounds(mTexts[i], 0, mTexts[i].length(), mRectText);
+//            // 粗略把文字的宽度视为圆心角2*θ对应的弧长，利用弧长公式得到θ，下面用于修正角度
+//            float θ = (float) (180 * mRectText.width() / 2 /
+//                    (Math.PI * (mRadius - mLength2 - mRectText.height())));
+//
+//            mPath.reset();
+//            mPath.addArc(
+//                    mRectFTextArc,
+//                    mStartAngle + i * (mSweepAngle / mSection) - θ, // 正起始角度减去θ使文字居中对准长刻度
+//                    mSweepAngle
+//            );
+//            canvas.drawTextOnPath(mTexts[i], mPath, 0, 0, mPaint);
+//        }
 
         /**
          * 画实时度数值
          */
         mPaint.setAlpha(255);
+        mPaint.setColor(getResources().getColor(R.color.color_light));
         mPaint.setTextSize(sp2px(50));
         mPaint.setTextAlign(Paint.Align.CENTER);
         String value = String.valueOf(mSolidCreditValue);
-        canvas.drawText(value, mCenterX, mCenterY + dp2px(30), mPaint);
-
-        /**
-         * 画表头
-         */
-        mPaint.setAlpha(160);
-        mPaint.setTextSize(sp2px(12));
-        canvas.drawText(mHeaderText, mCenterX, mCenterY - dp2px(20), mPaint);
-
-        /**
-         * 画信用描述
-         */
-        mPaint.setAlpha(255);
+        canvas.drawText(value, mCenterX-dp2px(10), mCenterY + dp2px(30), mPaint);
         mPaint.setTextSize(sp2px(20));
-        canvas.drawText(calculateCreditDescription(), mCenterX, mCenterY + dp2px(55), mPaint);
+        canvas.drawText("分", mCenterX+dp2px(30), mCenterY + dp2px(30), mPaint);
 
-        /**
-         * 画评估时间
-         */
-        mPaint.setAlpha(160);
-        mPaint.setTextSize(sp2px(10));
-        canvas.drawText(getFormatTimeStr(), mCenterX, mCenterY + dp2px(70), mPaint);
+//        /**
+//         * 画表头
+//         */
+//        mPaint.setAlpha(160);
+//        mPaint.setTextSize(sp2px(12));
+//        canvas.drawText(mHeaderText, mCenterX, mCenterY - dp2px(20), mPaint);
+
+//        /**
+//         * 画信用描述
+//         */
+//        mPaint.setAlpha(255);
+//        mPaint.setTextSize(sp2px(20));
+//        canvas.drawText(calculateCreditDescription(), mCenterX, mCenterY + dp2px(55), mPaint);
+//
+//        /**
+//         * 画评估时间
+//         */
+//        mPaint.setAlpha(160);
+//        mPaint.setTextSize(sp2px(10));
+//        canvas.drawText(getFormatTimeStr(), mCenterX, mCenterY + dp2px(70), mPaint);
     }
 
     private int dp2px(int dp) {
@@ -329,7 +330,7 @@ public class DashboardView extends View {
     private SweepGradient generateSweepGradient() {
         SweepGradient sweepGradient = new SweepGradient(mCenterX, mCenterY,
                 new int[]{Color.argb(0, 255, 255, 255), Color.argb(200, 255, 255, 255)},
-                new float[]{0, calculateRelativeAngleWithValue(mCreditValue) / 360}
+                new float[]{0, calculateRelativeAngleWithValue(mValue) / 360}
         );
         Matrix matrix = new Matrix();
         matrix.setRotate(mStartAngle - 1, mCenterX, mCenterY);
@@ -384,14 +385,14 @@ public class DashboardView extends View {
      */
     private float calculateRelativeAngleWithValue(int value) {
         float degreePerSection = 1f * mSweepAngle / mSection;
-        if (value > 700) {
-            return 8 * degreePerSection + 2 * degreePerSection / 250 * (value - 700);
-        } else if (value > 650) {
-            return 6 * degreePerSection + 2 * degreePerSection / 50 * (value - 650);
-        } else if (value > 600) {
-            return 4 * degreePerSection + 2 * degreePerSection / 50 * (value - 600);
-        } else if (value > 550) {
-            return 2 * degreePerSection + 2 * degreePerSection / 50 * (value - 550);
+        if (value > 80) {
+            return 8 * degreePerSection + 2 * degreePerSection / 250 * (value - 80);
+        } else if (value > 60) {
+            return 6 * degreePerSection + 2 * degreePerSection / 50 * (value - 60);
+        } else if (value > 40) {
+            return 4 * degreePerSection + 2 * degreePerSection / 50 * (value - 60);
+        } else if (value > 20) {
+            return 2 * degreePerSection + 2 * degreePerSection / 50 * (value - 20);
         } else {
             return 2 * degreePerSection / 200 * (value - 350);
         }
@@ -400,18 +401,18 @@ public class DashboardView extends View {
     /**
      * 信用分对应信用描述
      */
-    private String calculateCreditDescription() {
-        if (mSolidCreditValue > 700) {
-            return "信用极好";
-        } else if (mSolidCreditValue > 650) {
-            return "信用优秀";
-        } else if (mSolidCreditValue > 600) {
-            return "信用良好";
-        } else if (mSolidCreditValue > 550) {
-            return "信用中等";
-        }
-        return "信用较差";
-    }
+//    private String calculateCreditDescription() {
+//        if (mSolidCreditValue > 700) {
+//            return "信用极好";
+//        } else if (mSolidCreditValue > 650) {
+//            return "信用优秀";
+//        } else if (mSolidCreditValue > 600) {
+//            return "信用良好";
+//        } else if (mSolidCreditValue > 550) {
+//            return "信用中等";
+//        }
+//        return "信用较差";
+//    }
 
     private SimpleDateFormat mDateFormat;
 
@@ -423,7 +424,7 @@ public class DashboardView extends View {
     }
 
     public int getCreditValue() {
-        return mCreditValue;
+        return mValue;
     }
 
     /**
@@ -437,7 +438,7 @@ public class DashboardView extends View {
         }
 
         mSolidCreditValue = creditValue;
-        mCreditValue = creditValue;
+        mValue = creditValue;
         postInvalidate();
     }
 
@@ -457,7 +458,7 @@ public class DashboardView extends View {
         creditValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mCreditValue = (int) animation.getAnimatedValue();
+                mValue = (int) animation.getAnimatedValue();
                 postInvalidate();
             }
         });

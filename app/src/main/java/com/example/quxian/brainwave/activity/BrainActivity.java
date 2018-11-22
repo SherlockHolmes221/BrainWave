@@ -19,6 +19,9 @@ import java.util.Map;
 import java.util.Random;
 
 public class BrainActivity extends BaseActivity{
+    private DashboardView dashboardView;
+
+
     @Override
     public int bindLayout() {
         return R.layout.activity_brain;
@@ -27,19 +30,18 @@ public class BrainActivity extends BaseActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
+       // setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
         initView();
         initDashBoardView();
 
     }
 
-    private DashboardView dashboardView;
     private void initDashBoardView() {
-        dashboardView = findById(R.id.brain_act_dashboardview);
-        dashboardView.setCreditValueWithAnim(new Random().nextInt(950 - 350) + 350);
+        dashboardView.setCreditValueWithAnim(75);
     }
 
     private void initView() {
+        dashboardView = findById(R.id.brain_act_dashboardview);
     }
 
     

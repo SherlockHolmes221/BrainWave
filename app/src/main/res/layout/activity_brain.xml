@@ -60,8 +60,36 @@
         <!--app:FontSize="15sp"-->
         <!--app:ShapeColor="@color/blue" />-->
 
-    <com.example.quxian.brainwave.widget.DashboardView
-        android:id="@+id/brain_act_dashboardview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.quxian.brainwave.widget.DashboardView
+            android:id="@+id/brain_act_dashboardview"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:maxLines="1"
+                android:gravity="center"
+                android:textColor="@color/color_purple"
+                android:text="今天的情绪指数高"
+                android:textSize="15sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </LinearLayout>

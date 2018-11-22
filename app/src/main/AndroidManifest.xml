@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:screenOrientation="portrait">
-        <activity android:name=".activity.SignInActivity">
+        <activity android:name=".activity.BrainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,7 @@
         <activity android:name=".activity.MusicListActivity"/>
         <activity android:name=".activity.ConnectActivity"/>
         <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.BrainActivity"/>
+        <activity android:name=".activity.SignInActivity"/>
         <activity android:name=".activity.FAQActivity"/>
 
 
