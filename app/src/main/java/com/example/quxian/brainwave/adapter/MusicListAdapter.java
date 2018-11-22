@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.model.MusicData;
-import com.example.quxian.brainwave.widgt.AroundCircleView;
+import com.example.quxian.brainwave.widget.AroundCircleView;
 
 import java.util.List;
 

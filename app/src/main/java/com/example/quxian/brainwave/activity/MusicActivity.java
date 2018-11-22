@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.Message;
 
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,14 +29,14 @@ import com.example.quxian.brainwave.model.MusicData;
 import com.example.quxian.brainwave.service.MusicService;
 import com.example.quxian.brainwave.utils.DisplayUtil;
 import com.example.quxian.brainwave.utils.FastBlurUtil;
-import com.example.quxian.brainwave.widgt.BackgourndAnimationRelativeLayout;
-import com.example.quxian.brainwave.widgt.DiscView;
+import com.example.quxian.brainwave.widget.BackgourndAnimationRelativeLayout;
+import com.example.quxian.brainwave.widget.DiscView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.quxian.brainwave.widgt.DiscView.DURATION_NEEDLE_ANIAMTOR;
+import static com.example.quxian.brainwave.widget.DiscView.DURATION_NEEDLE_ANIAMTOR;
 
 public class MusicActivity extends BaseActivity implements DiscView.IPlayInfo, View.OnClickListener {
     private DiscView mDisc;

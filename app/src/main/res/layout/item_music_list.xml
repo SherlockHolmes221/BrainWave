@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
 
-        <com.example.quxian.brainwave.widgt.AroundCircleView
+        <com.example.quxian.brainwave.widget.AroundCircleView
             android:id="@+id/item_music_play"
             android:src="@drawable/ic_play"
             android:layout_width="60dp"

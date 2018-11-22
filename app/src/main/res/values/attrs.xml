@@ -42,4 +42,11 @@
         <attr name="bgcolor" />
         <attr name="isScroll" />
     </declare-styleable>
+
+    <declare-styleable name="chenliuliuT">
+        <attr name="lineCount" format="integer"></attr>
+        <attr name="pointCount" format="integer"></attr>
+    </declare-styleable>
+
+
 </resources>

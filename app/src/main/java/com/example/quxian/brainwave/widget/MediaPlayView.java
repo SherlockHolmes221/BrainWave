@@ -1,4 +1,4 @@
-package com.example.quxian.brainwave.widgt;
+package com.example.quxian.brainwave.widget;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;

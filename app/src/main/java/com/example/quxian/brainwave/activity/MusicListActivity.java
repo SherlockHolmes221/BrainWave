@@ -1,6 +1,5 @@
 package com.example.quxian.brainwave.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -8,16 +7,10 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,7 +19,6 @@ import com.example.quxian.brainwave.adapter.MusicListAdapter;
 import com.example.quxian.brainwave.base.BaseActivity;
 import com.example.quxian.brainwave.model.MusicData;
 import com.example.quxian.brainwave.service.MusicService;
-import com.example.quxian.brainwave.widgt.AroundCircleView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
