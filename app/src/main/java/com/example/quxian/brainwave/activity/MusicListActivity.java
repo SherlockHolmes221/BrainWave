@@ -63,62 +63,61 @@ public class MusicListActivity extends BaseActivity{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("id",i);
+                startActivity(MusicActivity.class,bundle);
 
-                if(myBinder != null){
-
-                    if(currentPlayId == i){
-                        if(myBinder.isPlaying()){
-                            myBinder.pause();
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    setBaseTitle("已暂停");
-                                }
-                            });
-                            mMusicDatas.get(i).setPlaying(false);
-                        }else {
-                            myBinder.play(i);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    setBaseTitle("已暂停");
-                                }
-                            });
-                            mMusicDatas.get(i).setPlaying(true);
-                        }
-                    }else {
-                        mMusicDatas.get(i).setPlaying(true);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                setBaseTitle( mMusicDatas.get(i).getMusicName());
-                            }
-                        });
-                        if(currentPlayId >= 0)
-                            mMusicDatas.get(currentPlayId).setPlaying(false);
-                        myBinder.play(i);
-                        currentPlayId = i;
-                    }
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            musicListAdapter.notifyDataSetChanged();
-                        }
-                    });
-                }//if
+//                if(myBinder != null){
+//                    if(currentPlayId == i){
+//                        if(myBinder.isPlaying()){
+//                            myBinder.pause();
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    setBaseTitle("已暂停");
+//                                }
+//                            });
+//                            mMusicDatas.get(i).setPlaying(false);
+//                        }else {
+//                            myBinder.play(i);
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    setBaseTitle("已暂停");
+//                                }
+//                            });
+//                            mMusicDatas.get(i).setPlaying(true);
+//                        }
+//                    }else {
+//                        mMusicDatas.get(i).setPlaying(true);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                setBaseTitle( mMusicDatas.get(i).getMusicName());
+//                            }
+//                        });
+//                        if(currentPlayId >= 0)
+//                            mMusicDatas.get(currentPlayId).setPlaying(false);
+//                        myBinder.play(i);
+//                        currentPlayId = i;
+//                    }
+//
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            musicListAdapter.notifyDataSetChanged();
+//                        }
+//                    });
+//                }//if
             }
         });
     }
 
     private void initMusicDatas() {
-//        MusicData musicData1 = new MusicData(R.raw.music1, R.raw.ic_music1, "コネクト", "ClariS");
-//        MusicData musicData2 = new MusicData(R.raw.music2, R.raw.ic_music2, "朋友关系", "龚子婕JessieG");
-//        MusicData musicData3 = new MusicData(R.raw.music3, R.raw.ic_music3, "烟熏妆", "邓紫棋");
-//
-//        mMusicDatas.add(musicData1);
-//        mMusicDatas.add(musicData2);
-//        mMusicDatas.add(musicData3);
+        MusicData musicData1 = new MusicData(R.raw.music1, R.raw.music_ic, "成全", "伦桑");
+        MusicData musicData2 = new MusicData(R.raw.music2, R.raw.music_ic, "无问", "毛不易");
+        mMusicDatas.add(musicData1);
+        mMusicDatas.add(musicData2);
 
 
         mNumTv.setText("所有单曲，共"+mMusicDatas.size()+"首");

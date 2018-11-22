@@ -16,6 +16,14 @@ import android.widget.Toast;
 import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.base.BaseActivity;
 import com.example.quxian.brainwave.utils.SaveAccountUtil;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.neurosky.AlgoSdk.NskAlgoDataType;
 import com.neurosky.AlgoSdk.NskAlgoSdk;
 import com.neurosky.connection.ConnectionStates;
@@ -62,6 +70,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private boolean bInited = false;
     private boolean bRunning = false;
 
+    private LineChart lineChart;
+
     @Override
     public int bindLayout() {
         return R.layout.activity_main;
@@ -70,7 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
+        //setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
 
         nskAlgoSdk = new NskAlgoSdk();//集成
 
@@ -79,7 +89,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         initView();
 
         initChart();
-        //setViewThree();
+
         //connect();
     }
 
@@ -111,6 +121,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         findById(R.id.main_act_brain_ly).setOnClickListener(this);
         findById(R.id.main_act_mind_ly).setOnClickListener(this);
         findById(R.id.main_act_faq_ly).setOnClickListener(this);
+
+        lineChart = findById(R.id.main_act_linechart);
 
     }
 
@@ -423,186 +435,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
-
-    private LineChartData lineChartData;
-    private LineChartView lineChartView;
-    private List<Line> linesList;
-    private List<PointValue> pointValueList;
-    private List<PointValue> pointValueList1;
-    private List<PointValue> points;
-    private int position = 0;
-    private Timer timer = new Timer();
-    private boolean isFinish = true;
-    private Axis axisY, axisX;
-    private Random random = new Random();
-    private void initChart(){
-        lineChartView = (LineChartView) findById(R.id.main_act_chartview);
-
-        pointValueList = new ArrayList<>();
-        pointValueList1 = new ArrayList<>();
-        linesList = new ArrayList<>();
-
-        //初始化坐标轴
-        axisY = new Axis();
-        //添加坐标轴的名称
-        axisY.setLineColor(Color.parseColor("#aab2bd"));
-        axisY.setTextColor(Color.parseColor("#aab2bd"));
-        axisX = new Axis();
-        axisX.setLineColor(Color.parseColor("#aab2bd"));
-        lineChartData = initDatas(null);
-        lineChartView.setLineChartData(lineChartData);
-
-        Viewport port = initViewPort(0, 50);
-        lineChartView.setCurrentViewportWithAnimation(port);
-        lineChartView.setInteractive(false);
-        lineChartView.setScrollEnabled(true);
-        lineChartView.setValueTouchEnabled(true);
-        lineChartView.setFocusableInTouchMode(true);
-        lineChartView.setViewportCalculationEnabled(false);
-        lineChartView.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
-        lineChartView.startDataAnimation();
-        points = new ArrayList<>();
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //实时添加新的点
-                try{
-                    addLine();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-        }, 1000, 1000);
-    }
-
-    private void addLine(){
-        PointValue value1 = new PointValue(position * 5, random.nextInt(100) + 40);
-        PointValue value2 = new PointValue(position * 5, random.nextInt(100) + 40);
-        value1.setLabel("00:00");
-        value2.setLabel("00:00");
-        pointValueList.add(value1);
-        pointValueList1.add(value2);
-
-        float x = value1.getX();
-        //根据新的点的集合画出新的线
-        Line line = new Line(pointValueList);
-        line.setColor(Color.RED);
-        line.setStrokeWidth(1);
-        line.setShape(ValueShape.CIRCLE);
-        line.setCubic(true);//曲线是否平滑，即是曲线还是折线
-
-        float x1 = value2.getX();
-        //根据新的点的集合画出新的线
-        Line line1 = new Line(pointValueList1);
-        line1.setColor(Color.BLUE);
-        line1.setStrokeWidth(1);
-        line1.setShape(ValueShape.CIRCLE);
-        line1.setCubic(true);//曲线是否平滑，即是曲线还是折线
-
-        linesList.clear();
-        linesList.add(line);
-        linesList.add(line1);
-        lineChartData = initDatas(linesList);
-        lineChartView.setLineChartData(lineChartData);
-        //根据点的横坐实时变幻坐标的视图范围
-        Viewport port;
-        if (x > 50 || x1 > 50) {
-            port = initViewPort(x - 50, x);
-        } else {
-            port = initViewPort(0, 50);
-        }
-
-        lineChartView.setCurrentViewport(port);//当前窗口
-
-        Viewport maPort = initMaxViewPort(Math.max(x,x1));
-        lineChartView.setMaximumViewport(maPort);//最大窗口
-        position++;
-    }
-
-    private LineChartData initDatas(List<Line> lines) {
-        LineChartData data = new LineChartData(lines);
-        data.setAxisYLeft(axisY);
-        data.setAxisXBottom(axisX);
-        return data;
-    }
-
-    /**
-     * 当前显示区域
-     *
-     * @param left
-     * @param right
-     * @return
-     */
-    private Viewport initViewPort(float left, float right) {
-        Viewport port = new Viewport();
-        port.top = 150;
-        port.bottom = 0;
-        port.left = left;
-        port.right = right;
-        return port;
-    }
-
-    /**
-     * 最大显示区域
-     *
-     * @param right
-     * @return
-     */
-    private Viewport initMaxViewPort(float right) {
-        Viewport port = new Viewport();
-        port.top = 150;
-        port.bottom = 0;
-        port.left = 0;
-        port.right = right + 50;
-        return port;
-    }
-
-
-    //    private CanvasView canvasView;
-//    private void setViewThree() {
-//        canvasView = findById(R.id.main_act_chartview);
-//        canvasView.setLineCount(9);
-//        canvasView.setPointCount(15);
-//        ArrayList<Integer> one = new ArrayList<Integer>();
-//        ArrayList<Integer> two = new ArrayList<Integer>();
-//        ArrayList<Integer> three = new ArrayList<Integer>();
-//        for (int i = 0; i < 15; i++) {
-//            Random rand = new Random();
-//            one.add(rand.nextInt(9));
-//            two.add(rand.nextInt(9));
-//            three.add(rand.nextInt(9));
-//        }
-//        canvasView.setData(one, two);
-//    }
-
-
-//    private String[] mChartItems = new String[]{"6:00", "8:00", "10:00", "12:00", "14:00", "16:00", "18:00"};
-//    private int[] mWeekPoints = new int[]{100, 150, 80, 40, 90, 50, 150};
-//    private List<LineChartData> dataList1 = new ArrayList<>();
-//    //x轴坐标对应的数据
-//    private List<String> xValue = new ArrayList<>();
-//    //y轴坐标对应的数据
-//    private List<Integer> yValue = new ArrayList<>();
-//    //折线对应的数据
-//    private Map<String, Integer> value = new HashMap<>();
-//    private Map<String, Integer> value1 = new HashMap<>();
-//    private void initChart() {
-//        for (int i = 0; i < 12; i++) {
-//            xValue.add((i + 1) + "月");
-//            value.put((i + 1) + "月", (int) (Math.random() * 181 + 60));//60--240
-//            value1.put((i + 1) + "月", (int) (Math.random() * 181 + 100));//60--240
-//        }
-//
-//        for (int i = 0; i < 6; i++) {
-//            yValue.add(i * 60);
-//        }
-//        ChartView chartView = (ChartView) findViewById(R.id.main_act_chartview);
-//        chartView.setValue(value, xValue, yValue);
-//        chartView.setValue(value1, xValue, yValue);
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -617,5 +449,82 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void initChart() {
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setAxisMinimum(0);
+        xAxis.setAxisMaximum(10);
+        xAxis.setLabelCount(10, false);
+
+        lineChart.getAxisRight().setEnabled(false);
+
+        //获得 YAxis 类实例
+        YAxis leftAxis = lineChart.getAxisLeft();
+
+        // 设置y轴数据的位置
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setAxisMinimum(0);
+        leftAxis.setAxisMaximum(60);
+        leftAxis.setLabelCount(3, false);
+
+        // 不显示图例
+        Legend legend = lineChart.getLegend();
+        legend.setEnabled(false);
+        lineChart.invalidate();
+
+        List<Entry> entries = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            float val = (float) (Math.random() * 40) + 3;
+            entries.add(new Entry(i, val));
+        }
+        List<Entry> entries1 = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            float val = (float) (Math.random() * 40) + 3;
+            entries1.add(new Entry(i, val));
+        }
+        setChartData(lineChart,entries,entries1);
+    }
+
+    public static void setChartData(LineChart chart, List<Entry> values, List<Entry> values1) {
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+
+        LineDataSet lineDataSet;
+        lineDataSet = new LineDataSet(values, "");
+        // 设置曲线颜色
+        lineDataSet.setColor(Color.GREEN);
+        // 设置平滑曲线
+        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        // 不显示坐标点的小圆点
+        lineDataSet.setDrawCircles(false);
+        // 不显示坐标点的数据
+        lineDataSet.setDrawValues(false);
+        // 不显示定位线
+        lineDataSet.setHighlightEnabled(false);
+
+        LineDataSet lineDataSet1;
+        lineDataSet1 = new LineDataSet(values1, "");
+        // 设置曲线颜色
+        lineDataSet1.setColor(Color.YELLOW);
+        // 设置平滑曲线
+        lineDataSet1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        // 不显示坐标点的小圆点
+        lineDataSet1.setDrawCircles(false);
+        // 不显示坐标点的数据
+        lineDataSet1.setDrawValues(false);
+        // 不显示定位线
+        lineDataSet1.setHighlightEnabled(false);
+
+        dataSets.add(lineDataSet);
+
+        dataSets.add(lineDataSet1);
+
+        LineData data = new LineData(dataSets);
+        chart.setData(data);
+        chart.invalidate();
     }
 }

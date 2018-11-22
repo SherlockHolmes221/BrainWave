@@ -17,7 +17,7 @@
         android:paddingRight="16dp">
 
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -34,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/brain_act_date_tv"
                     android:gravity="center"
                     android:textSize="12sp"
                     android:text="2018年11月20日"
@@ -74,12 +75,26 @@
 
         </LinearLayout>
 
+        <TextView
+            android:padding="5dp"
+            android:text="前额皮肤电压"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/brain_act_linechart1"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:background="@color/bgColor"
             android:layout_margin="16dp"/>
+
+        <TextView
+            android:padding="5dp"
+            android:text="专注度/放松度"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/brain_act_linechart2"

@@ -1,43 +1,34 @@
 package com.example.quxian.brainwave.activity;
 
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.quxian.brainwave.R;
 import com.example.quxian.brainwave.base.BaseActivity;
-import com.example.quxian.brainwave.model.LineChartData;
 import com.example.quxian.brainwave.utils.SaveAccountUtil;
-import com.example.quxian.brainwave.widget.ChartView;
 import com.example.quxian.brainwave.widget.DashboardView;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 public class BrainActivity extends BaseActivity{
     private DashboardView dashboardView;
     private LineChart lineChart1;
     private LineChart lineChart2;
+    private TextView dataTv;
 
 
     @Override
@@ -48,7 +39,7 @@ public class BrainActivity extends BaseActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
+        setBaseTitle(SaveAccountUtil.getUserBean().getAccount());
         initView();
         initDashBoardView();
         initLineChart1();
@@ -56,11 +47,6 @@ public class BrainActivity extends BaseActivity{
     }
 
     private void initLineChart2() {
-        Description d = new Description();
-        d.setText("专注度/放松度");
-        lineChart2.setDescription(d);
-        lineChart2.invalidate();
-
         XAxis xAxis = lineChart2.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextColor(Color.WHITE);
@@ -100,11 +86,6 @@ public class BrainActivity extends BaseActivity{
     }
 
     private void initLineChart1() {
-        Description d = new Description();
-        d.setText("前额皮肤电压");
-        lineChart1.setDescription(d);
-        lineChart1.invalidate();
-
         XAxis xAxis = lineChart1.getXAxis();
         // 不显示x轴
         xAxis.setDrawAxisLine(false);
@@ -151,7 +132,7 @@ public class BrainActivity extends BaseActivity{
      * @param chart  图表
      * @param values 数据
      */
-    public static void setChartData2(LineChart chart, List<Entry> values,List<Entry> values1) {
+    private static void setChartData2(LineChart chart, List<Entry> values,List<Entry> values1) {
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
         LineDataSet lineDataSet;
@@ -242,6 +223,14 @@ public class BrainActivity extends BaseActivity{
         dashboardView = findById(R.id.brain_act_dashboardview);
         lineChart1 = findById(R.id.brain_act_linechart1);
         lineChart2 = findById(R.id.brain_act_linechart2);
+        dataTv = findById(R.id.brain_act_date_tv);
+        dataTv.setText(getDate());
+    }
+
+    private String getDate(){
+        Calendar cal=Calendar.getInstance();
+        return cal.get(Calendar.YEAR)+"年"+(cal.get(Calendar.MONTH)+1)
+                +"月"+cal.get(Calendar.DATE)+"日";
     }
 
     

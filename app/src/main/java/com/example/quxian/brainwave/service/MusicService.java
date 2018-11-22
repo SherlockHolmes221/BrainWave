@@ -25,6 +25,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     public static final String ACTION_OPT_MUSIC_NEXT = "ACTION_OPT_MUSIC_NEXT";
     public static final String ACTION_OPT_MUSIC_LAST = "ACTION_OPT_MUSIC_LAST";
     public static final String ACTION_OPT_MUSIC_SEEK_TO = "ACTION_OPT_MUSIC_SEEK_TO";
+    public static final String ACTION_OPT_MUSIC_SET_POSITION = "ACTION_OPT_MUSIC_SET_POSITION";
 
     /*状态指令*/
     public static final String ACTION_STATUS_MUSIC_PLAY = "ACTION_STATUS_MUSIC_PLAY";
@@ -36,6 +37,8 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     public static final String PARAM_MUSIC_SEEK_TO = "PARAM_MUSIC_SEEK_TO";
     public static final String PARAM_MUSIC_CURRENT_POSITION = "PARAM_MUSIC_CURRENT_POSITION";
     public static final String PARAM_MUSIC_IS_OVER = "PARAM_MUSIC_IS_OVER";
+    public static final String PARAM_MUSIC_SET_POSITION = "ACTION_MUSIC_SET_POSITION";
+
 
     private int mCurrentMusicIndex = 0;
     private boolean mIsMusicPause = false;
@@ -43,6 +46,11 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     private MusicReceiver mMusicReceiver = new MusicReceiver();
     private MediaPlayer mMediaPlayer = new MediaPlayer();
+
+    public void setmCurrentMusicIndex(Intent intent) {
+        int position = intent.getIntExtra(PARAM_MUSIC_SET_POSITION, 0);
+        this.mCurrentMusicIndex = position;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -76,6 +84,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         intentFilter.addAction(ACTION_OPT_MUSIC_NEXT);
         intentFilter.addAction(ACTION_OPT_MUSIC_LAST);
         intentFilter.addAction(ACTION_OPT_MUSIC_SEEK_TO);
+        intentFilter.addAction(ACTION_OPT_MUSIC_SET_POSITION);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMusicReceiver,intentFilter);
     }
@@ -164,6 +173,8 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
                 next();
             } else if (action.equals(ACTION_OPT_MUSIC_SEEK_TO)) {
                 seekTo(intent);
+            } else if (action.equals(ACTION_OPT_MUSIC_SET_POSITION)) {
+                setmCurrentMusicIndex(intent);
             }
         }
     }

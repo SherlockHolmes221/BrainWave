@@ -39,6 +39,7 @@ import java.util.List;
 import static com.example.quxian.brainwave.widget.DiscView.DURATION_NEEDLE_ANIAMTOR;
 
 public class MusicActivity extends BaseActivity implements DiscView.IPlayInfo, View.OnClickListener {
+    private static final String TAG = "MusicActivity";
     private DiscView mDisc;
     private SeekBar mSeekBar;
     private ImageView mIvPlayOrPause, mIvNext, mIvLast;
@@ -66,11 +67,17 @@ public class MusicActivity extends BaseActivity implements DiscView.IPlayInfo, V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_music);
         initMusicDatas();
         initView();
         initMusicReceiver();
-        //makeStatusBarTransparent();
+        initPosition();
+    }
+
+    private void initPosition() {
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("id",0);
+        mDisc.notifyMusicInfoChanged(id);
+        setPosition(id);
     }
 
     @Override
@@ -146,18 +153,14 @@ public class MusicActivity extends BaseActivity implements DiscView.IPlayInfo, V
     }
 
     private void initMusicDatas() {
-//        MusicData musicData1 = new MusicData(R.raw.music1, R.raw.ic_music1, "コネクト", "ClariS");
-//        MusicData musicData2 = new MusicData(R.raw.music2, R.raw.ic_music2, "朋友关系", "龚子婕JessieG");
-//        MusicData musicData3 = new MusicData(R.raw.music3, R.raw.ic_music3, "烟熏妆", "邓紫棋");
-
-//        mMusicDatas.add(musicData1);
-//        mMusicDatas.add(musicData2);
-//        mMusicDatas.add(musicData3);
+        MusicData musicData1 = new MusicData(R.raw.music1, R.raw.music_ic, "成全", "伦桑");
+        MusicData musicData2 = new MusicData(R.raw.music2, R.raw.music_ic, "无问", "毛不易");
+        mMusicDatas.add(musicData1);
+        mMusicDatas.add(musicData2);
 
         Intent intent = new Intent(this, MusicService.class);
         intent.putExtra(PARAM_MUSIC_LIST, (Serializable) mMusicDatas);
         startService(intent);
-
     }
 
     private void try2UpdateMusicPicBackground(final int musicPicRes) {
@@ -234,12 +237,9 @@ public class MusicActivity extends BaseActivity implements DiscView.IPlayInfo, V
         return BitmapFactory.decodeResource(getResources(), musicPicRes, options);
     }
 
-
     @Override
     public void onMusicInfoChanged(String musicName, String musicAuthor) {
         setBaseTitle(musicName);
-//        getSupportActionBar().setTitle(musicName);
-//        getSupportActionBar().setSubtitle(musicAuthor);
     }
 
     @Override
@@ -341,6 +341,12 @@ public class MusicActivity extends BaseActivity implements DiscView.IPlayInfo, V
     private void seekTo(int position) {
         Intent intent = new Intent(MusicService.ACTION_OPT_MUSIC_SEEK_TO);
         intent.putExtra(MusicService.PARAM_MUSIC_SEEK_TO,position);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    private void setPosition(int position) {
+        Intent intent = new Intent(MusicService.ACTION_OPT_MUSIC_SET_POSITION);
+        intent.putExtra(MusicService.PARAM_MUSIC_SET_POSITION,position);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

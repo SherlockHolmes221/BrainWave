@@ -304,33 +304,13 @@
                     android:textColor="@color/text_color"
                     android:textSize="18sp" />
 
-                <lecho.lib.hellocharts.view.LineChartView
-                    android:id="@+id/main_act_chartview"
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/main_act_linechart"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+                    android:layout_height="150dp"
+                    android:background="@color/bgColor"
+                    android:layout_margin="16dp"/>
 
-                <!--<com.example.quxian.brainwave.widgt.CanvasView-->
-                    <!--android:id="@+id/main_act_chartview"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--app:lineCount="9"-->
-                    <!--app:pointCount="15"/>-->
-
-                <!--<com.example.quxian.brainwave.widgt.ChartView-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_marginRight="10dp"-->
-                    <!--android:background="@color/bgColor"-->
-                    <!--android:id="@+id/main_act_chartview"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--app:interval="50dp"-->
-                    <!--app:isScroll="false"-->
-                    <!--app:linecolor="#02bbb7"-->
-                    <!--app:xylinecolor="#e2e2e2"-->
-                    <!--app:xylinewidth="1dp"-->
-                    <!--app:xytextcolor="#7e7e7e"-->
-                    <!--app:xytextsize="12sp" />-->
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

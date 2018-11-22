@@ -528,6 +528,10 @@ public class DiscView extends RelativeLayout {
         }
     }
 
+    public void setPosition(int position){
+        mVpContain.setCurrentItem(position);
+    }
+
     public boolean isPlaying() {
         return musicStatus == MusicStatus.PLAY;
     }
