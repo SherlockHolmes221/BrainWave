@@ -156,7 +156,6 @@ public class MusicListActivity extends BaseActivity implements MusicListAdapter.
             if (action.equals(MusicService.ACTION_STATUS_MUSIC_PLAY)) {
                 beforePlayId = currentPlayId;
                 currentPlayId = intent.getIntExtra(PARAM_MUSIC_CURRENT_POSITION_INDEX, 0);
-                Log.e(TAG, "onReceive: ");
                 isPlaying = true;
                 refreshMusicView();
             } else if (action.equals(MusicService.ACTION_STATUS_MUSIC_PAUSE)) {
@@ -170,9 +169,7 @@ public class MusicListActivity extends BaseActivity implements MusicListAdapter.
     }
 
     private void refreshMusicView() {
-        Log.e(TAG, "refreshMusicView: ");
         if(isPlaying){
-            Log.e(TAG, "playing");
             setBaseTitle(mMusicDatas.get(currentPlayId).getMusicName());
             if(currentPlayId == beforePlayId){
                 mMusicDatas.get(currentPlayId).setPlaying(true);
