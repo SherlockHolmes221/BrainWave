@@ -25,7 +25,7 @@ public class MusicListAdapter extends BaseAdapter {
     }
 
     public interface OnMusicStateChangeListener{
-        void playOrPause();
+        void playOrPause(int position);
     }
 
     public MusicListAdapter(Context context, List<MusicData> mMusicList) {
@@ -49,7 +49,7 @@ public class MusicListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
 
         MusicData musicInfo = mMusicList.get(i);
         ViewHolder viewHolder =null;
@@ -78,7 +78,7 @@ public class MusicListAdapter extends BaseAdapter {
         viewHolder.circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.playOrPause();
+                listener.playOrPause(i);
             }
         });
         //viewHolder.mTime.setText(String.valueOf(musicInfo.getmTime()));

@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.example.quxian.brainwave.activity.MusicActivity;
 import com.example.quxian.brainwave.model.MusicData;
@@ -19,8 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MusicService extends Service implements MediaPlayer.OnCompletionListener{
+    private static final String TAG = "MusicService";
     /*操作指令*/
     public static final String ACTION_OPT_MUSIC_PLAY = "ACTION_OPT_MUSIC_PLAY";
+    public static final String ACTION_OPT_MUSIC_PLAY_WITH_POSITION = "ACTION_OPT_MUSIC_PLAY_WITH_POSITION";
     public static final String ACTION_OPT_MUSIC_PAUSE = "ACTION_OPT_MUSIC_PAUSE";
     public static final String ACTION_OPT_MUSIC_NEXT = "ACTION_OPT_MUSIC_NEXT";
     public static final String ACTION_OPT_MUSIC_LAST = "ACTION_OPT_MUSIC_LAST";
@@ -79,8 +82,8 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     private void initBoardCastReceiver() {
         IntentFilter intentFilter = new IntentFilter();
-
         intentFilter.addAction(ACTION_OPT_MUSIC_PLAY);
+        intentFilter.addAction(ACTION_OPT_MUSIC_PLAY_WITH_POSITION);
         intentFilter.addAction(ACTION_OPT_MUSIC_PAUSE);
         intentFilter.addAction(ACTION_OPT_MUSIC_NEXT);
         intentFilter.addAction(ACTION_OPT_MUSIC_LAST);
@@ -166,7 +169,10 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
             String action = intent.getAction();
             if (action.equals(ACTION_OPT_MUSIC_PLAY)) {
                 play(mCurrentMusicIndex);
-            } else if (action.equals(ACTION_OPT_MUSIC_PAUSE)) {
+            }else if (action.equals(ACTION_OPT_MUSIC_PLAY_WITH_POSITION)) {
+                int index = intent.getIntExtra(MusicService.PARAM_MUSIC_CURRENT_POSITION_INDEX, 0);
+                play(index);
+            }else if (action.equals(ACTION_OPT_MUSIC_PAUSE)) {
                 pause();
             } else if (action.equals(ACTION_OPT_MUSIC_LAST)) {
                 last();

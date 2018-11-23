@@ -28,6 +28,7 @@
             <TextView
                 android:id="@+id/item_music_name"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="歌曲名字"
@@ -37,6 +38,7 @@
             <TextView
                 android:id="@+id/item_music_singer"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.quxian.brainwave.activity.MusicActivity.PARAM_MUSIC_LIST;
+import static com.example.quxian.brainwave.service.MusicService.PARAM_MUSIC_CURRENT_POSITION_INDEX;
 
 public class MusicListActivity extends BaseActivity implements MusicListAdapter.OnMusicStateChangeListener{
     private TextView mNumTv;
@@ -140,8 +141,12 @@ public class MusicListActivity extends BaseActivity implements MusicListAdapter.
         LocalBroadcastManager.getInstance(this).registerReceiver(mMusicReceiver,intentFilter);
     }
 
-    private void optMusic(final String action) {
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(action));
+    private void optMusic(final String action,int positon) {
+        Intent intent = new Intent(action);
+        if (action.equals(MusicService.ACTION_OPT_MUSIC_PLAY_WITH_POSITION)) {
+            intent.putExtra(PARAM_MUSIC_CURRENT_POSITION_INDEX,positon);
+        }
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     public class MusicReceiver extends BroadcastReceiver {
@@ -150,8 +155,8 @@ public class MusicListActivity extends BaseActivity implements MusicListAdapter.
             String action = intent.getAction();
             if (action.equals(MusicService.ACTION_STATUS_MUSIC_PLAY)) {
                 beforePlayId = currentPlayId;
-                currentPlayId = intent.getIntExtra(MusicService.PARAM_MUSIC_CURRENT_POSITION_INDEX, 0);
-                Log.e(TAG, "onReceive: "+ currentPlayId);
+                currentPlayId = intent.getIntExtra(PARAM_MUSIC_CURRENT_POSITION_INDEX, 0);
+                Log.e(TAG, "onReceive: ");
                 isPlaying = true;
                 refreshMusicView();
             } else if (action.equals(MusicService.ACTION_STATUS_MUSIC_PAUSE)) {
@@ -165,16 +170,21 @@ public class MusicListActivity extends BaseActivity implements MusicListAdapter.
     }
 
     private void refreshMusicView() {
+        Log.e(TAG, "refreshMusicView: ");
         if(isPlaying){
+            Log.e(TAG, "playing");
             setBaseTitle(mMusicDatas.get(currentPlayId).getMusicName());
-            mMusicDatas.get(currentPlayId).setPlaying(true);
-            mMusicDatas.get(beforePlayId).setPlaying(false);
+            if(currentPlayId == beforePlayId){
+                mMusicDatas.get(currentPlayId).setPlaying(true);
+            }else {
+                mMusicDatas.get(beforePlayId).setPlaying(false);
+                mMusicDatas.get(currentPlayId).setPlaying(true);
+            }
         }
         else {
             setBaseTitle("已暂停");
             mMusicDatas.get(currentPlayId).setPlaying(false);
         }
-
         musicListAdapter.notifyDataSetChanged();
     }
 
@@ -189,14 +199,24 @@ public class MusicListActivity extends BaseActivity implements MusicListAdapter.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_user:
-                //showToast("user");
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void playOrPause() {
-
+    public void playOrPause(int position) {
+        Log.e(TAG, "playOrPause: "+currentPlayId);
+        Log.e(TAG, "playOrPause: "+position);
+        if(!isPlaying)
+            optMusic(MusicService.ACTION_OPT_MUSIC_PLAY_WITH_POSITION,position);
+        else {//playing
+            if(position == currentPlayId)
+                optMusic(MusicService.ACTION_OPT_MUSIC_PAUSE,position);
+            else{
+                Log.e(TAG, "playOrPause: ");
+                optMusic(MusicService.ACTION_OPT_MUSIC_PLAY_WITH_POSITION,position);
+            }
+        }
     }
 }
