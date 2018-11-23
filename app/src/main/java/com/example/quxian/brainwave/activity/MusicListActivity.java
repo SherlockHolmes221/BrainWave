@@ -1,5 +1,6 @@
 package com.example.quxian.brainwave.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,18 +29,18 @@ import java.util.List;
 
 import static com.example.quxian.brainwave.activity.MusicActivity.PARAM_MUSIC_LIST;
 
-public class MusicListActivity extends BaseActivity{
-    ServiceConnection serviceConnection = null;
-    MusicService.MyBinder myBinder;
-
-
+public class MusicListActivity extends BaseActivity implements MusicListAdapter.OnMusicStateChangeListener{
     private TextView mNumTv;
     private ListView listView;
     private MusicListAdapter musicListAdapter;
+    private MusicReceiver mMusicReceiver = new MusicReceiver();
     private List<MusicData> mMusicDatas = new ArrayList<>();
-    private int currentPlayId = -1;
+    private int beforePlayId = 0;
+    private int currentPlayId = 0;
+    private boolean isPlaying;
 
     private static final String TAG = "MusicListActivity";
+
 
     @Override
     public int bindLayout() {
@@ -57,6 +60,7 @@ public class MusicListActivity extends BaseActivity{
         initMusicReceiver();
 
         musicListAdapter = new MusicListAdapter(this,mMusicDatas);
+        musicListAdapter.setOnMusicStateChangeListener(this);
         listView.setAdapter(musicListAdapter);
 
         //点击
@@ -119,30 +123,11 @@ public class MusicListActivity extends BaseActivity{
         mMusicDatas.add(musicData1);
         mMusicDatas.add(musicData2);
 
-
         mNumTv.setText("所有单曲，共"+mMusicDatas.size()+"首");
 
         Intent intent = new Intent(this, MusicService.class);
         intent.putExtra(PARAM_MUSIC_LIST, (Serializable) mMusicDatas);
         startService(intent);
-
-        if(serviceConnection == null) {
-            serviceConnection = new ServiceConnection() {
-                @Override
-                public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                    myBinder = (MusicService.MyBinder) iBinder;
-                }
-
-                @Override
-                public void onServiceDisconnected(ComponentName componentName) {
-
-                }
-            };
-        }
-
-        //以绑定方式连接服务
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-
     }
 
     private void initMusicReceiver() {
@@ -151,15 +136,48 @@ public class MusicListActivity extends BaseActivity{
         intentFilter.addAction(MusicService.ACTION_STATUS_MUSIC_PAUSE);
         intentFilter.addAction(MusicService.ACTION_STATUS_MUSIC_DURATION);
         intentFilter.addAction(MusicService.ACTION_STATUS_MUSIC_COMPLETE);
+        /*注册本地广播*/
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMusicReceiver,intentFilter);
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        serviceConnection = null;
-        myBinder = null;
+    private void optMusic(final String action) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(action));
     }
+
+    public class MusicReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(MusicService.ACTION_STATUS_MUSIC_PLAY)) {
+                beforePlayId = currentPlayId;
+                currentPlayId = intent.getIntExtra(MusicService.PARAM_MUSIC_CURRENT_POSITION_INDEX, 0);
+                Log.e(TAG, "onReceive: "+ currentPlayId);
+                isPlaying = true;
+                refreshMusicView();
+            } else if (action.equals(MusicService.ACTION_STATUS_MUSIC_PAUSE)) {
+                isPlaying = false;
+                refreshMusicView();
+            } else if (action.equals(MusicService.ACTION_STATUS_MUSIC_COMPLETE)) {
+                isPlaying = false;
+                refreshMusicView();
+            }
+        }
+    }
+
+    private void refreshMusicView() {
+        if(isPlaying){
+            setBaseTitle(mMusicDatas.get(currentPlayId).getMusicName());
+            mMusicDatas.get(currentPlayId).setPlaying(true);
+            mMusicDatas.get(beforePlayId).setPlaying(false);
+        }
+        else {
+            setBaseTitle("已暂停");
+            mMusicDatas.get(currentPlayId).setPlaying(false);
+        }
+
+        musicListAdapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,5 +193,10 @@ public class MusicListActivity extends BaseActivity{
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void playOrPause() {
+
     }
 }

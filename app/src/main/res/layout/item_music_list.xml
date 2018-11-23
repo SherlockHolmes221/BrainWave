@@ -15,19 +15,19 @@
         <com.example.quxian.brainwave.widget.AroundCircleView
             android:id="@+id/item_music_play"
             android:src="@drawable/ic_play"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"/>
 
         <LinearLayout
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/item_music_name"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="歌曲名字"

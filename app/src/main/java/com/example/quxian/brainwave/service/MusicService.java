@@ -38,6 +38,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     public static final String PARAM_MUSIC_CURRENT_POSITION = "PARAM_MUSIC_CURRENT_POSITION";
     public static final String PARAM_MUSIC_IS_OVER = "PARAM_MUSIC_IS_OVER";
     public static final String PARAM_MUSIC_SET_POSITION = "ACTION_MUSIC_SET_POSITION";
+    public static final String PARAM_MUSIC_CURRENT_POSITION_INDEX = "PARAM_MUSIC_CURRENT_POSITION_INDEX";
 
 
     private int mCurrentMusicIndex = 0;
@@ -195,6 +196,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         Intent intent = new Intent(action);
         if (action.equals(ACTION_STATUS_MUSIC_PLAY)) {
             intent.putExtra(PARAM_MUSIC_CURRENT_POSITION,mMediaPlayer.getCurrentPosition());
+            intent.putExtra(PARAM_MUSIC_CURRENT_POSITION_INDEX,mCurrentMusicIndex);
         }
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }

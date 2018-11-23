@@ -18,6 +18,15 @@ public class MusicListAdapter extends BaseAdapter {
 
     private List<MusicData> mMusicList;
     private LayoutInflater mInflater;
+    private OnMusicStateChangeListener listener;
+
+    public void setOnMusicStateChangeListener(OnMusicStateChangeListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnMusicStateChangeListener{
+        void playOrPause();
+    }
 
     public MusicListAdapter(Context context, List<MusicData> mMusicList) {
         this.mMusicList = mMusicList;
@@ -66,6 +75,12 @@ public class MusicListAdapter extends BaseAdapter {
         }
         viewHolder.mSongName.setText(musicInfo.getMusicName());
         viewHolder.mSinger.setText(musicInfo.getMusicAuthor());
+        viewHolder.circle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.playOrPause();
+            }
+        });
         //viewHolder.mTime.setText(String.valueOf(musicInfo.getmTime()));
         return view;
     }

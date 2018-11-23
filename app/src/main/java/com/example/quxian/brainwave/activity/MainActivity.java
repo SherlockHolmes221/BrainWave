@@ -1,20 +1,31 @@
 package com.example.quxian.brainwave.activity;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quxian.brainwave.R;
+import com.example.quxian.brainwave.adapter.MusicListAdapter;
 import com.example.quxian.brainwave.base.BaseActivity;
+import com.example.quxian.brainwave.model.MusicData;
+import com.example.quxian.brainwave.service.MusicService;
 import com.example.quxian.brainwave.utils.SaveAccountUtil;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -35,20 +46,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import lecho.lib.hellocharts.gesture.ContainerScrollType;
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.ValueShape;
-import lecho.lib.hellocharts.model.Viewport;
-import lecho.lib.hellocharts.view.LineChartView;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.example.quxian.brainwave.activity.MusicActivity.PARAM_MUSIC_LIST;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
@@ -72,6 +76,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private LineChart lineChart;
 
+    private MusicReceiver mMusicReceiver = new MusicReceiver();
+    private List<MusicData> mMusicDatas = new ArrayList<>();
+
+    private ImageView musicPlayIv;
+    private ImageView musicNextIv;
+    private ImageView musicLastIv;
+    private TextView mucisTv;
+    private CircleImageView musicIv;
+
+    private int currentMusicPosition = 0;
+    private boolean isPlaying;
+
     @Override
     public int bindLayout() {
         return R.layout.activity_main;
@@ -87,8 +103,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         checkBLE();
 
         initView();
-
         initChart();
+
+        initMusicDatas();
+        initMusicReceiver();
 
         //connect();
     }
@@ -124,6 +142,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         lineChart = findById(R.id.main_act_linechart);
 
+        mucisTv = findById(R.id.main_act_music_tv);
+        musicIv = findById(R.id.main_act_music_iv);
+        musicLastIv = findById(R.id.main_act_music_last);
+        musicNextIv = findById(R.id.main_act_music_next);
+        musicPlayIv = findById(R.id.main_act_music_play);
+
+        musicLastIv.setOnClickListener(this);
+        musicNextIv.setOnClickListener(this);
+        musicPlayIv.setOnClickListener(this);
     }
 
     private void connect() {
@@ -305,7 +332,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     };
 
-
     private void canData(){
         output_data_count = 0;
         output_data = null;
@@ -431,8 +457,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.main_act_faq_ly:
                 startActivity(FAQActivity.class);
                 break;
+            case R.id.main_act_music_last:
+                optMusic(MusicService.ACTION_OPT_MUSIC_LAST);
+                break;
+            case R.id.main_act_music_play:
+                if(!isPlaying)
+                    optMusic(MusicService.ACTION_OPT_MUSIC_PLAY);
+                else
+                    optMusic(MusicService.ACTION_OPT_MUSIC_PAUSE);
+                break;
+            case R.id.main_act_music_next:
+                optMusic(MusicService.ACTION_OPT_MUSIC_NEXT);
+                break;
         }
-
     }
 
     @Override
@@ -526,5 +563,64 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         LineData data = new LineData(dataSets);
         chart.setData(data);
         chart.invalidate();
+    }
+
+
+
+    private void initMusicReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MusicService.ACTION_STATUS_MUSIC_PLAY);
+        intentFilter.addAction(MusicService.ACTION_STATUS_MUSIC_PAUSE);
+        intentFilter.addAction(MusicService.ACTION_STATUS_MUSIC_DURATION);
+        intentFilter.addAction(MusicService.ACTION_STATUS_MUSIC_COMPLETE);
+        /*注册本地广播*/
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMusicReceiver,intentFilter);
+    }
+
+    private void initMusicDatas() {
+        MusicData musicData1 = new MusicData(R.raw.music1, R.raw.music_ic, "成全", "伦桑");
+        MusicData musicData2 = new MusicData(R.raw.music2, R.raw.music_ic, "无问", "毛不易");
+        mMusicDatas.add(musicData1);
+        mMusicDatas.add(musicData2);
+
+        Intent intent = new Intent(this, MusicService.class);
+        intent.putExtra(PARAM_MUSIC_LIST, (Serializable) mMusicDatas);
+        startService(intent);
+
+        refreshMusicView();
+    }
+
+    private void refreshMusicView() {
+        mucisTv.setText(mMusicDatas.get(currentMusicPosition).getMusicName());
+        musicIv.setImageResource(mMusicDatas.get(currentMusicPosition).getMusicPicRes());
+        if(isPlaying){
+            musicPlayIv.setImageResource(R.drawable.ic_pause);
+        }else {
+            musicPlayIv.setImageResource(R.drawable.ic_play);
+        }
+    }
+
+    private void optMusic(final String action) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(action));
+    }
+
+
+    public class MusicReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(MusicService.ACTION_STATUS_MUSIC_PLAY)) {
+                currentMusicPosition = intent.getIntExtra(MusicService.PARAM_MUSIC_CURRENT_POSITION_INDEX, 0);
+                Log.e(TAG, "onReceive: "+ currentMusicPosition);
+                isPlaying = true;
+                refreshMusicView();
+            } else if (action.equals(MusicService.ACTION_STATUS_MUSIC_PAUSE)) {
+                isPlaying = false;
+                refreshMusicView();
+            } else if (action.equals(MusicService.ACTION_STATUS_MUSIC_COMPLETE)) {
+                isPlaying = false;
+                refreshMusicView();
+            }
+        }
     }
 }
