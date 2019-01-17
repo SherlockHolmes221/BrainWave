@@ -67,9 +67,13 @@ public class LeDeviceListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         BluetoothDevice device = mLeDevices.get(i);
-        final String deviceName = device.getName();
-        if (deviceName != null && deviceName.length() > 0)
-            viewHolder.deviceName.setText(deviceName);
+        final String deviceName = device.getAddress();
+        if (deviceName != null && deviceName.length() > 0) {
+//            if(deviceName.equals("00:68:A7:03:F9:FE")){
+//                viewHolder.deviceName.setText("脑电波柔性传感器");
+//            }else
+                viewHolder.deviceName.setText(deviceName);
+        }
         else
             viewHolder.deviceName.setText(R.string.unknown_device);
 

@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -76,7 +77,9 @@ public class MusicActivity extends BaseActivity implements DiscView.IPlayInfo, V
     private void initPosition() {
         Intent intent = getIntent();
         int id = intent.getIntExtra("id",0);
+        Log.e(TAG, "initPosition: "+id );
         mDisc.notifyMusicInfoChanged(id);
+        mDisc.setPosition(id);
         setPosition(id);
     }
 
@@ -155,8 +158,10 @@ public class MusicActivity extends BaseActivity implements DiscView.IPlayInfo, V
     private void initMusicDatas() {
         MusicData musicData1 = new MusicData(R.raw.music1, R.raw.music_ic, "成全", "伦桑");
         MusicData musicData2 = new MusicData(R.raw.music2, R.raw.music_ic, "无问", "毛不易");
+        MusicData musicData3 = new MusicData(R.raw.music3, R.raw.music3_ic, "梦中的婚礼", " 纯音乐");
         mMusicDatas.add(musicData1);
         mMusicDatas.add(musicData2);
+        mMusicDatas.add(musicData3);
 
         Intent intent = new Intent(this, MusicService.class);
         intent.putExtra(PARAM_MUSIC_LIST, (Serializable) mMusicDatas);
@@ -303,15 +308,20 @@ public class MusicActivity extends BaseActivity implements DiscView.IPlayInfo, V
     }
 
     private void next() {
-        mRootLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                optMusic(MusicService.ACTION_OPT_MUSIC_NEXT);
-            }
-        }, DURATION_NEEDLE_ANIAMTOR);
-        stopUpdateSeekBarProgree();
-        mTvMusicDuration.setText(duration2Time(0));
-        mTvTotalMusicDuration.setText(duration2Time(0));
+        try{
+            mRootLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    optMusic(MusicService.ACTION_OPT_MUSIC_NEXT);
+                }
+            }, DURATION_NEEDLE_ANIAMTOR);
+            stopUpdateSeekBarProgree();
+            mTvMusicDuration.setText(duration2Time(0));
+            mTvTotalMusicDuration.setText(duration2Time(0));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void last() {

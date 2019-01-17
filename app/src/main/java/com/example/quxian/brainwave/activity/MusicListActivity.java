@@ -121,8 +121,11 @@ public class MusicListActivity extends BaseActivity implements MusicListAdapter.
     private void initMusicDatas() {
         MusicData musicData1 = new MusicData(R.raw.music1, R.raw.music_ic, "成全", "伦桑");
         MusicData musicData2 = new MusicData(R.raw.music2, R.raw.music_ic, "无问", "毛不易");
+        MusicData musicData3 = new MusicData(R.raw.music3, R.raw.music3_ic, "梦中的婚礼", " 纯音乐");
+
         mMusicDatas.add(musicData1);
         mMusicDatas.add(musicData2);
+        mMusicDatas.add(musicData3);
 
         mNumTv.setText("所有单曲，共"+mMusicDatas.size()+"首");
 

@@ -110,6 +110,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         initMusicReceiver();
 
         //connect();
+        //
+        // 此处的功能还没有测试
+        //蓝牙搜索的问题
+        //
     }
 
     private void checkBLE() {
@@ -263,6 +267,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         public void onDataReceived(int datatype, int data, Object obj) {
             // You can handle the received data here
             // You can feed the raw data to algo sdk here if necessary.
+            showToast("收到了数据");
             Log.e(TAG,"onDataReceived");
             switch (datatype) {
                 case MindDataType.CODE_ATTENTION:
@@ -333,6 +338,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     };
 
+    //对应cannedButton
     private void canData(){
         output_data_count = 0;
         output_data = null;
@@ -345,6 +351,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         AssetManager assetManager = getAssets();
         InputStream inputStream = null;
 
+        //读取文件的数据
         Log.e(TAG, "Reading output data");
         try {
             int j;
@@ -384,18 +391,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             e.printStackTrace();
         }
 
+        //output_data中存储了数据，大小根据接收数据的变化而变化
+        //raw_data原始数据512*85
+
         Log.e(TAG, "Reading raw data");
         try {
             inputStream = assetManager.open("raw_data_em.bin");
-            raw_data = readData(inputStream, 512*raw_data_sec_len);
+            raw_data = readData(inputStream, 512*raw_data_sec_len);// raw_data_sec_len = 85
             raw_data_index = 512*raw_data_sec_len;
             inputStream.close();
+
+
+            //什么意思？？？
             nskAlgoSdk.NskAlgoDataStream(NskAlgoDataType.NSK_ALGO_DATA_TYPE_BULK_EEG.value, raw_data, 512 * raw_data_sec_len);
+
         } catch (IOException e) {
 
         }
         Log.e(TAG, "Finished reading data");
     }
+
 
     private short[] readData(InputStream is, int size) {
         short data[] = new short[size];
@@ -418,11 +433,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         return data;
     }
 
-    private void start(){
+    //对应停止按钮
+    private void stop(){
         nskAlgoSdk.NskAlgoStop();
     }
 
-    private void stop(){
+    //对应开始按钮
+    private void start(){
         if (bRunning == false) {
             nskAlgoSdk.NskAlgoStart(false);
         } else {
@@ -447,7 +464,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.main_act_brain_ly:
-                startActivity(BrainActivity.class);
+                startActivity(NewBrainActivity.class);
                 break;
             case R.id.main_act_mind_ly:
                 startActivity(MindDataActivity.class);
@@ -475,15 +492,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_connect, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.item_user:
-                //showToast("user");
+            case R.id.item_connect:
+                connect();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -581,8 +598,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private void initMusicDatas() {
         MusicData musicData1 = new MusicData(R.raw.music1, R.raw.music_ic, "成全", "伦桑");
         MusicData musicData2 = new MusicData(R.raw.music2, R.raw.music_ic, "无问", "毛不易");
+        MusicData musicData3 = new MusicData(R.raw.music3, R.raw.music3_ic, "梦中的婚礼", " 纯音乐");
         mMusicDatas.add(musicData1);
         mMusicDatas.add(musicData2);
+        mMusicDatas.add(musicData3);
 
         Intent intent = new Intent(this, MusicService.class);
         intent.putExtra(PARAM_MUSIC_LIST, (Serializable) mMusicDatas);

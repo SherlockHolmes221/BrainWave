@@ -32,6 +32,7 @@
         <activity android:name=".activity.BrainActivity"/>
         <activity android:name=".activity.MindDataActivity"/>
         <activity android:name=".activity.FAQActivity"/>
+        <activity android:name=".activity.NewBrainActivity"/>
 
 
         <service android:name=".service.BluetoothLeService"/>

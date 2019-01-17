@@ -14,6 +14,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import com.example.quxian.brainwave.utils.DisplayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class DiscView extends RelativeLayout {
     private ImageView mIvNeedle;
@@ -509,17 +512,24 @@ public class DiscView extends RelativeLayout {
     }
 
     public void next() {
-        int currentItem = mVpContain.getCurrentItem();
-        if (currentItem == mMusicDatas.size() - 1) {
-            Toast.makeText(getContext(), "已经到达最后一首", Toast.LENGTH_SHORT).show();
-        } else {
-            selectMusicWithButton();
-            mVpContain.setCurrentItem(currentItem + 1, true);
+        try{
+            int currentItem = mVpContain.getCurrentItem();
+            Log.e(TAG, "last: "+currentItem);
+            if (currentItem == mMusicDatas.size() - 1) {
+                Toast.makeText(getContext(), "已经到达最后一首", Toast.LENGTH_SHORT).show();
+            } else {
+                selectMusicWithButton();
+                mVpContain.setCurrentItem(currentItem + 1, true);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 
     public void last() {
         int currentItem = mVpContain.getCurrentItem();
+        Log.e(TAG, "last: "+currentItem);
         if (currentItem == 0) {
             Toast.makeText(getContext(), "已经到达第一首", Toast.LENGTH_SHORT).show();
         } else {

@@ -116,7 +116,9 @@ public class ConnectActivity extends BaseActivity {
                //connecting
                Log.e(TAG, "OnItemClickListener");
 
+               //if(mLeDeviceListAdapter.getDevice(i).getAddress().equals("00:68:A7:03:F9:FE"))
                startActivity(MainActivity.class);
+               //else showToast("未找到设备");
 
 //               TextView textView = view.findViewById(R.id.item_connect_state);
 //               String s = textView.getText().toString();
@@ -299,7 +301,7 @@ public class ConnectActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_quit:
-                //showToast("退出");
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
